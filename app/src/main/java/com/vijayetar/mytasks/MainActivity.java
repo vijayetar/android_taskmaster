@@ -2,6 +2,7 @@ package com.vijayetar.mytasks;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -24,6 +25,9 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 System.out.println("we are reviewing all tasks");
+                // try to connect to all Tasks page
+                Intent goToAllTasksPage = new Intent(MainActivity.this, AllTasks.class);
+                MainActivity.this.startActivity(goToAllTasksPage);
             }
         });
     }
