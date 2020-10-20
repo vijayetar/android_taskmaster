@@ -19,6 +19,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 System.out.println("we are adding a task");
+                Intent addATaskActivity = new Intent(MainActivity.this, AddTask.class);
+                MainActivity.this.startActivity(addATaskActivity);
             }
         });
         allTasks.setOnClickListener(new View.OnClickListener() {
@@ -26,8 +28,8 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view){
                 System.out.println("we are reviewing all tasks");
                 // try to connect to all Tasks page
-                Intent goToAllTasksPage = new Intent(MainActivity.this, AllTasks.class);
-                MainActivity.this.startActivity(goToAllTasksPage);
+                Intent seeAllTasksActivity = new Intent(MainActivity.this, AllTasks.class);
+                MainActivity.this.startActivity(seeAllTasksActivity);
             }
         });
     }
