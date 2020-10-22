@@ -1,6 +1,8 @@
 package com.vijayetar.mytasks;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -11,6 +13,8 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class MainActivity extends AppCompatActivity {
 
     @Override
@@ -19,14 +23,23 @@ public class MainActivity extends AppCompatActivity {
         // this is setting the username above the buttons in a textview or else get the preferences from the settings activity
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         TextView declareUsername = findViewById(R.id.enterUserNameTextV);
-        declareUsername.setText(preferences.getString("userName", "Go to settings to enter username")); //this is default string if username is not available
-
+        String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
+        declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
     }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        ArrayList<Task> allMyTasks = new ArrayList<>();
+        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
+        allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
+        allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
+
+        RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+//        recyclerView.setAdapter(new TaskAdapter(Task,this));
+
 
 
         // this is button taking you to the add task and all tasks activity

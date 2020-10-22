@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class AddTask extends AppCompatActivity {
 
@@ -31,6 +32,11 @@ public class AddTask extends AppCompatActivity {
                 // try to print out the submitted text view here on click
                 TextView textShowSubmit = AddTask.this.findViewById(R.id.editShowSubmit);
                 textShowSubmit.setVisibility(View.VISIBLE);
+
+//                Toast toast = Toast.makeText(this,'s', Toast.LENGTH_LONG);
+//                toast.setGravity(220,0, 1000);
+//                toast.show();
+
             }
         });
 
