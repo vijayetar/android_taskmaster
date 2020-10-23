@@ -15,7 +15,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInteractWithTaskListener {
 
     @Override
     public void onResume(){
@@ -32,14 +32,22 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ArrayList<Task> allMyTasks = new ArrayList<>();
+
         allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
         allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
         allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
+        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
+        allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
+        allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
+        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
+        allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
+        allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
+        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
 
         RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-//        recyclerView.setAdapter(new TaskAdapter(Task,this));
-
+        LinearLayoutManager l = new LinearLayoutManager(this);
+        recyclerView.setLayoutManager(l);
+        recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
 
 
         // this is button taking you to the add task and all tasks activity
@@ -75,4 +83,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    public void taskListener(Task task) {
+        Intent intent = new Intent(MainActivity.this, TaskDetail.class);
+        intent.putExtra("title", task.getTitle());
+        intent.putExtra("body", task.getBody());
+        intent.putExtra("state", task.getState());
+        this.startActivity(intent);
+    }
+
 }

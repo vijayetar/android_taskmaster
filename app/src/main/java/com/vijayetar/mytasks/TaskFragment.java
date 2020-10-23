@@ -35,9 +35,9 @@ public class TaskFragment extends Fragment {
      * Use this factory method to create a new instance of
      * this fragment using the provided parameters.
      *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @param param3 Parameter 2.
+     * @param title Title.
+     * @param body Body.
+     * @param state State.
      * @return A new instance of fragment TaskFragment.
      */
     // TODO: Rename and change types and number of parameters
@@ -68,4 +68,9 @@ public class TaskFragment extends Fragment {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_task, container, false);
     }
+
+    // MY NOTATION : two other lifecycle methods of a fragment in a recyclerview
+    // onAttach - we will use this to set listeners
+    // onDetach - useful for tracking what a user has seen / ignored etc/ removing from a queue
+
 }
