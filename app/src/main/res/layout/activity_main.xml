@@ -25,10 +25,33 @@
         android:id="@+id/allTasks"
         android:layout_width="120dp"
         android:layout_height="47dp"
-        android:layout_marginTop="56dp"
-        android:layout_marginEnd="24dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="16dp"
         android:text="ALL TASKS"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
+
+    <Button
+        android:id="@+id/addTask"
+        android:layout_width="120dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="28dp"
+        android:layout_marginTop="108dp"
+        android:text="ADD TASK"
+        app:layout_constraintEnd_toStartOf="@+id/allTasks"
+        app:layout_constraintHorizontal_bias="0.062"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
+
+    <TextView
+        android:id="@+id/enterUserNameTextV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="Please enter username"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
 
     <ImageButton
@@ -43,33 +66,11 @@
         app:layout_constraintVertical_bias="0.629"
         app:srcCompat="@android:drawable/ic_menu_add" />
 
-    <Button
-        android:id="@+id/addTask"
-        android:layout_width="120dp"
-        android:layout_height="47dp"
-        android:layout_marginStart="28dp"
-        android:layout_marginTop="56dp"
-        android:text="ADD TASK"
-        app:layout_constraintEnd_toStartOf="@+id/allTasks"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
-
-    <TextView
-        android:id="@+id/enterUserNameTextV"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="Please enter username"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
-
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/allMyTasksRV"
-        android:layout_width="317dp"
-        android:layout_height="313dp"
+        android:layout_width="374dp"
+        android:layout_height="160dp"
+        android:background="@android:color/holo_blue_dark"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

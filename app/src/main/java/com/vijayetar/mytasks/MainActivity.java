@@ -36,13 +36,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
         allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
         allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
-        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
-        allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
-        allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
-        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
-        allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
-        allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
-        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
+        allMyTasks.add(new Task ("exercise", "its fun", "assigned" ));
+        allMyTasks.add(new Task("shopping", "also fun", "new"));
+        allMyTasks.add(new Task("read book","maybe tomorrow", "in progress"));
 
         RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
         LinearLayoutManager l = new LinearLayoutManager(this);

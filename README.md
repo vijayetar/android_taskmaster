@@ -15,9 +15,13 @@ v0.1
 
 ## Here are images of the app 
 ---------------------------------
-#### v0.1 
+#### v0.2 
 Home Screen:
+* ![Settings Screen](screenshots/ActivitySetting.png ) 
+
 * ![Home Screen](screenshots/ActivityMain.png)  
+
+* ![Task Detail Screen](screenshots/ActivityDetail.png)  
 
 All Tasks:
 * ![All Tasks](screenshots/ActivityAllTasks.png)  
