@@ -42,7 +42,7 @@ public class TaskAdapter extends RecyclerView.Adapter<TaskAdapter.TaskViewHolder
 
             @Override
             public void onClick(View view) {
-                System.out.println("this si view holder title" + viewHolder.task.getTitle());
+                System.out.println("this si view holder title:  " + viewHolder.task.getTitle());
                 // Goal: go to a detail page about that cheap thing
                 // TODO: clicking 2: assume the Activity listener exists and try to call it
                 listener.taskListener(viewHolder.task);
