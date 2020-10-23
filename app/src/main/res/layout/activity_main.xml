@@ -21,42 +21,60 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.099" />
 
-    <ScrollView
-        android:id="@+id/scrollView2"
-        android:layout_width="323dp"
-        android:layout_height="316dp"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="48dp"
-        android:background="#5E5454"
+    <Button
+        android:id="@+id/allTasks"
+        android:layout_width="120dp"
+        android:layout_height="47dp"
+        android:layout_marginTop="108dp"
+        android:layout_marginEnd="16dp"
+        android:text="ALL TASKS"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.488"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textView">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
-    </ScrollView>
+        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
 
     <Button
         android:id="@+id/addTask"
         android:layout_width="120dp"
         android:layout_height="47dp"
         android:layout_marginStart="28dp"
-        android:layout_marginTop="48dp"
+        android:layout_marginTop="108dp"
         android:text="ADD TASK"
+        app:layout_constraintEnd_toStartOf="@+id/allTasks"
+        app:layout_constraintHorizontal_bias="0.062"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
 
-    <Button
-        android:id="@+id/allTasks"
-        android:layout_width="120dp"
-        android:layout_height="47dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="40dp"
-        android:text="ALL TASKS"
+    <TextView
+        android:id="@+id/enterUserNameTextV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="72dp"
+        android:text="Please enter username"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/scrollView2" />
+        app:layout_constraintHorizontal_bias="0.528"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/allMyTasksRV" />
+
+    <ImageButton
+        android:id="@+id/goToSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="4dp"
+        android:layout_marginBottom="15dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/allTasks"
+        app:layout_constraintTop_toBottomOf="@+id/allTasks"
+        app:layout_constraintVertical_bias="0.629"
+        app:srcCompat="@android:drawable/ic_menu_add" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/allMyTasksRV"
+        android:layout_width="374dp"
+        android:layout_height="160dp"
+        android:background="@android:color/holo_blue_dark"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.172" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
