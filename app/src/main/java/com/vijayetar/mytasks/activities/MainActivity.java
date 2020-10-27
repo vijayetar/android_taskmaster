@@ -23,6 +23,9 @@ import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInteractWithTaskListener {
     Database db;
+    RecyclerView recyclerView;
+    ArrayList<Task> allMyTasks;
+
 
     @Override
     public void onResume(){
@@ -33,24 +36,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
         declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
 
-//        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
-//                .allowMainThreadQueries()
-//                .build();
-//
-//        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
-//
-//        RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
-//        LinearLayoutManager l = new LinearLayoutManager(this);
-//        recyclerView.setLayoutManager(l);
-//        recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
-
-//
-//        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
-//                .allowMainThreadQueries()
-//                .build();
-//        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
-//        recyclerView.getAdapter().notifyItemInserted(0);
-//        recyclerView.smoothScrollToPosition(0);
+        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+        allMyTasks.clear();
+        // need to iterate over the new array list and update the allMyTasks contents, because allMyTasks is already connected with the adaptor
+        for (int i = 0; i<updatedTasks.size(); i++){
+            allMyTasks.add(updatedTasks.get(i));
+        }
+        recyclerView.getAdapter().notifyItemInserted(0);
+        recyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -62,9 +55,9 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
                 .allowMainThreadQueries()
                 .build();
 
-        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+        allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
 
-        RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
+        recyclerView = findViewById(R.id.allMyTasksRV);
         LinearLayoutManager l = new LinearLayoutManager(this);
 //        l.canScrollHorizontally(); // to set it up horizontally, otherwise not required
 //        l.setOrientation(LinearLayoutManager.HORIZONTAL);// set it up horizontally, otherwise not required
