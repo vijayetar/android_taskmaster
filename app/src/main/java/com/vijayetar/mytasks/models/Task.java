@@ -1,6 +1,12 @@
-package com.vijayetar.mytasks;
+package com.vijayetar.mytasks.models;
 
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity
 public class Task {
+    @PrimaryKey(autoGenerate = true)
+    public long id;
     private String title;
     private String body;
     private String state; // should be one of new, assigned, in progress or complete

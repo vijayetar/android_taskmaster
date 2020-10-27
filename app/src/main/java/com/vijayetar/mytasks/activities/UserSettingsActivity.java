@@ -1,4 +1,4 @@
-package com.vijayetar.mytasks;
+package com.vijayetar.mytasks.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,9 +7,10 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.Toast;
 
-public class UserSettings extends AppCompatActivity {
+import com.vijayetar.mytasks.R;
+
+public class UserSettingsActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,7 +23,7 @@ public class UserSettings extends AppCompatActivity {
         findViewById(R.id.saveNameButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                EditText nameOfUser = UserSettings.this.findViewById(R.id.nameInputText);
+                EditText nameOfUser = UserSettingsActivity.this.findViewById(R.id.nameInputText);
                 System.out.println(nameOfUser.getText().toString());
                 // this sets a key value pair
                 preferenceEditor.putString("userName",nameOfUser.getText().toString()); // you can store multiple types here

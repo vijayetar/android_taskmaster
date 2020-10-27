@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="50dp"
     android:minHeight="40dp"
-    tools:context=".TaskFragment">
+    tools:context=".activities.TaskFragmentActivity">
 
     <TextView
         android:id="@+id/titleTV"
