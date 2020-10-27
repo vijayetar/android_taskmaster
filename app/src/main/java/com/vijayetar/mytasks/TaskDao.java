@@ -15,4 +15,7 @@ public interface TaskDao {
 
     @Query("SELECT * FROM Task;")
     public List<Task> getAllTasks();
+
+    @Query("SELECT * FROM Task ORDER BY id DESC")
+    public List<Task> getAllTasksReversed();
 }

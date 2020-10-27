@@ -32,6 +32,25 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         TextView declareUsername = findViewById(R.id.enterUserNameTextV);
         String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
         declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
+
+//        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
+//                .allowMainThreadQueries()
+//                .build();
+//
+//        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+//
+//        RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
+//        LinearLayoutManager l = new LinearLayoutManager(this);
+//        recyclerView.setLayoutManager(l);
+//        recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
+
+//
+//        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
+//                .allowMainThreadQueries()
+//                .build();
+//        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+//        recyclerView.getAdapter().notifyItemInserted(0);
+//        recyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -43,7 +62,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
                 .allowMainThreadQueries()
                 .build();
 
-        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasks();
+        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
 
         RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
         LinearLayoutManager l = new LinearLayoutManager(this);

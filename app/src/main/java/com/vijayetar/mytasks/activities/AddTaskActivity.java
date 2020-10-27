@@ -1,8 +1,11 @@
 package com.vijayetar.mytasks.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.room.Room;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -20,6 +23,14 @@ public class AddTaskActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
         db = Room.databaseBuilder(getApplicationContext(), Database.class, "vijayetar_taskmaster").allowMainThreadQueries().build();
+
+//        NotificationChannel channel = new NotificationChannel("basic", "basic", NotificationManager.IMPORTANCE_HIGH);
+//        channel.setDescription("basic notifications");
+//        // Register the channel with the system; you can't change the importance
+//        // or other notification behaviors after this
+//        NotificationManager notificationManager = getSystemService(NotificationManager.class);
+//        notificationManager.createNotificationChannel(channel);
+
         Button addTask = AddTaskActivity.this.findViewById(R.id.addTaskSubmit);
 //        final EditText textShowSubmit = AddTask.this.findViewById(R.id.editShowSubmit);
 
@@ -39,10 +50,15 @@ public class AddTaskActivity extends AppCompatActivity {
                 TextView textShowSubmit = AddTaskActivity.this.findViewById(R.id.editShowSubmit);
                 textShowSubmit.setVisibility(View.VISIBLE);
 
-//                Toast toast = Toast.makeText(this,'s', Toast.LENGTH_LONG);
-//                toast.setGravity(220,0, 1000);
-//                toast.show();
-
+//                NotificationCompat.Builder builder = new NotificationCompat.Builder(MainActivity.this, "basic")
+//                        .setSmallIcon(R.drawable.ic_launcher_background)
+//                        .setContentTitle(taskName)
+//                        .setContentText("Submitted")
+//                        .setStyle(new NotificationCompat.BigTextStyle()
+//                                .bigText("Much longer text that cannot fit one line..."))
+//                        .setPriority(NotificationCompat.PRIORITY_MAX);
+//
+//                notificationManager.notify(89898989, builder.build());
             }
         });
 
