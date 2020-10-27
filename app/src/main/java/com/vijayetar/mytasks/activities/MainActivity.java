@@ -47,13 +47,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         Task trialTask = new Task("trial", "this is a trial task", "assigned");
         db.taskDao().saveTask(trialTask);
 
-        ArrayList<Task> allMyTasks = new ArrayList<>();
-        allMyTasks.add(new Task ("attend Java class", "Codefellows classes are fun", "assigned" ));
-        allMyTasks.add(new Task("code challenges", "lab 27 and 28 are hard", "new"));
-        allMyTasks.add(new Task("apply to jobs","apply to several jobs on glassdoor", "in progress"));
-        allMyTasks.add(new Task ("exercise", "its fun", "assigned" ));
-        allMyTasks.add(new Task("shopping", "also fun", "new"));
-        allMyTasks.add(new Task("read book","maybe tomorrow", "in progress"));
+        ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasks();
 
         RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
         LinearLayoutManager l = new LinearLayoutManager(this);
