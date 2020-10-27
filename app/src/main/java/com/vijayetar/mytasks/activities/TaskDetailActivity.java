@@ -19,6 +19,10 @@ public class TaskDetailActivity extends AppCompatActivity {
         String bodyName= intent.getStringExtra("body");
         String stateName = intent.getStringExtra("state");
         TextView title = findViewById(R.id.taskDetailNameTV);
+        TextView body = findViewById(R.id.taskBodyTV);
+        TextView status = findViewById(R.id.taskStatusTV);
         title.setText(titleName);
+        body.setText(bodyName);
+        status.setText(stateName);
     }
 }
