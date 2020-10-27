@@ -1,4 +1,4 @@
-package com.vijayetar.mytasks;
+package com.vijayetar.mytasks.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -6,7 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
-public class TaskDetail extends AppCompatActivity {
+import com.vijayetar.mytasks.R;
+
+public class TaskDetailActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -17,6 +19,10 @@ public class TaskDetail extends AppCompatActivity {
         String bodyName= intent.getStringExtra("body");
         String stateName = intent.getStringExtra("state");
         TextView title = findViewById(R.id.taskDetailNameTV);
+        TextView body = findViewById(R.id.taskBodyTV);
+        TextView status = findViewById(R.id.taskStatusTV);
         title.setText(titleName);
+        body.setText(bodyName);
+        status.setText(stateName);
     }
 }

@@ -1,4 +1,4 @@
-package com.vijayetar.mytasks;
+package com.vijayetar.mytasks.activities;
 
 import android.os.Bundle;
 
@@ -8,12 +8,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.vijayetar.mytasks.R;
+
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link TaskFragment#newInstance} factory method to
+ * Use the {@link TaskFragmentActivity#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class TaskFragment extends Fragment {
+public class TaskFragmentActivity extends Fragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -27,7 +29,7 @@ public class TaskFragment extends Fragment {
     private String mState;
 
 
-    public TaskFragment() {
+    public TaskFragmentActivity() {
         // Required empty public constructor
     }
 
@@ -41,8 +43,8 @@ public class TaskFragment extends Fragment {
      * @return A new instance of fragment TaskFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static TaskFragment newInstance(String title, String body, String state) {
-        TaskFragment fragment = new TaskFragment();
+    public static TaskFragmentActivity newInstance(String title, String body, String state) {
+        TaskFragmentActivity fragment = new TaskFragmentActivity();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, title);
         args.putString(ARG_PARAM2, body);

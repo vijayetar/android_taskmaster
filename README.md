@@ -1,5 +1,5 @@
 # My Tasks APP
-v0.1
+v0.3
 
 ## How to run the app
 * Clone the repository from the git hub projects
@@ -14,8 +14,7 @@ v0.1
 * Run the app using an emulator or on the android phone
 
 ## Here are images of the app 
----------------------------------
-#### v0.2 
+--------------------------------- 
 Home Screen:
 * ![Settings Screen](screenshots/ActivitySetting.png ) 
 
@@ -29,8 +28,11 @@ All Tasks:
 Add Task:  
 * ![Add Task](screenshots/ActivityAddTask_enter.png)  
 
-Add Test Task and print it:
-* ![Add Task and print it](screenshots/ActivityAddTask_Sout.png)  
+Add Test Task and show in database:
+* ![Add Task in database](screenshots/Database_submitted.png)
+
+<!-- Add Test Task and print it:
+* ![Add Task and print it](screenshots/ActivityAddTask_Sout.png)   -->
 
 Show that it is submitted:
 * ![Add Task and show submission](screenshots/ActivityAddTask_Submitted.png)

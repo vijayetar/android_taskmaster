@@ -1,10 +1,12 @@
-package com.vijayetar.mytasks;
+package com.vijayetar.mytasks.activities;
 
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
 
-public class AllTasks extends AppCompatActivity {
+import com.vijayetar.mytasks.R;
+
+public class AllTasksActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
