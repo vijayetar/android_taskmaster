@@ -43,10 +43,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
                 .allowMainThreadQueries()
                 .build();
 
-
-        Task trialTask = new Task("trial", "this is a trial task", "assigned");
-        db.taskDao().saveTask(trialTask);
-
         ArrayList<Task> allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasks();
 
         RecyclerView recyclerView = findViewById(R.id.allMyTasksRV);
