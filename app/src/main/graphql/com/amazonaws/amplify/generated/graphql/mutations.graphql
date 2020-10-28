@@ -1,0 +1,40 @@
+# this is an auto generated file. This will be overwritten
+mutation CreateAmplifyTask(
+  $input: CreateAmplifyTaskInput!
+  $condition: ModelAmplifyTaskConditionInput
+) {
+  createAmplifyTask(input: $input, condition: $condition) {
+    id
+    title
+    body
+    status
+    createdAt
+    updatedAt
+  }
+}
+mutation UpdateAmplifyTask(
+  $input: UpdateAmplifyTaskInput!
+  $condition: ModelAmplifyTaskConditionInput
+) {
+  updateAmplifyTask(input: $input, condition: $condition) {
+    id
+    title
+    body
+    status
+    createdAt
+    updatedAt
+  }
+}
+mutation DeleteAmplifyTask(
+  $input: DeleteAmplifyTaskInput!
+  $condition: ModelAmplifyTaskConditionInput
+) {
+  deleteAmplifyTask(input: $input, condition: $condition) {
+    id
+    title
+    body
+    status
+    createdAt
+    updatedAt
+  }
+}

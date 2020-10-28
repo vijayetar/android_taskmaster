@@ -1,0 +1,6 @@
+type AmplifyTask @model {
+  id: ID!
+  title: String
+  body: String
+  status: String
+}
