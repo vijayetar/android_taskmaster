@@ -1,0 +1,28 @@
+# this is an auto generated file. This will be overwritten
+query GetAmplifyTask($id: ID!) {
+  getAmplifyTask(id: $id) {
+    id
+    title
+    body
+    status
+    createdAt
+    updatedAt
+  }
+}
+query ListAmplifyTasks(
+  $filter: ModelAmplifyTaskFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listAmplifyTasks(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      title
+      body
+      status
+      createdAt
+      updatedAt
+    }
+    nextToken
+  }
+}

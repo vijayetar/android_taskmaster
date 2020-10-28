@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.core.Amplify;
 import com.vijayetar.mytasks.R;
 import com.vijayetar.mytasks.TaskAdapter;
@@ -55,6 +56,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         setContentView(R.layout.activity_main);
 
         try {
+            Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
             Log.i("MyAmplifyApp", "Initialized Amplify");
         } catch (AmplifyException error) {
