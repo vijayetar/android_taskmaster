@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.aws.AWSApiPlugin;
+import com.amplifyframework.api.graphql.model.ModelQuery;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.vijayetar.mytasks.R;
@@ -39,6 +40,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         TextView declareUsername = findViewById(R.id.enterUserNameTextV);
         String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
         declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
+        getContentFromAWSDynamoDB();
 
 //        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
 //        allMyTasks.clear();
@@ -56,6 +58,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         setContentView(R.layout.activity_main);
         configureAWS();
         allMyTasks = new ArrayList<>();
+        getContentFromAWSDynamoDB();
 //        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
 //                .allowMainThreadQueries()
 //                .build();
@@ -111,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         intent.putExtra("state", task.getState());
         this.startActivity(intent);
     }
+
     private void configureAWS(){
         try {
             Amplify.addPlugin(new AWSApiPlugin());
@@ -120,5 +124,19 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
             Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
         }
     }
+    // pull out the contents of the dynamoDB
+    public void getContentFromAWSDynamoDB(){
+        Amplify.API.query(
+                ModelQuery.list(Task.class),
+                response -> {
+                    ArrayList<Task> allTasksFromDynamo = new ArrayList<>();
+                    for (Task thisTask: response.getData() ){
+                        allTasksFromDynamo.add(thisTask);
+                        System.out.println(thisTask.toString());
+                    }
+                },
+                error -> Log.e("AmplifyDB.queryitems", "Could not get the items"));
+    }
+
 
 }
