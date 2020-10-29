@@ -6,6 +6,8 @@ import java.util.UUID;
 import java.util.Objects;
 
 import androidx.core.util.ObjectsCompat;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
 
 import com.amplifyframework.core.model.Model;
 import com.amplifyframework.core.model.annotations.Index;
@@ -17,12 +19,14 @@ import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
 /** This is an auto generated class representing the Task type in your schema. */
 @SuppressWarnings("all")
+@Entity
 @ModelConfig(pluralName = "Tasks")
 public final class Task implements Model {
   public static final QueryField ID = field("id");
   public static final QueryField TITLE = field("title");
   public static final QueryField BODY = field("body");
   public static final QueryField STATE = field("state");
+  @PrimaryKey(autoGenerate = true)
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String title;
   private final @ModelField(targetType="String") String body;
