@@ -16,16 +16,17 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.core.Amplify;
+import com.amplifyframework.datastore.generated.model.Task;
 import com.vijayetar.mytasks.R;
 import com.vijayetar.mytasks.TaskAdapter;
 import com.vijayetar.mytasks.models.Database;
-import com.vijayetar.mytasks.models.Task;
 
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInteractWithTaskListener {
-    Database db;
+//    Database db;
     RecyclerView recyclerView;
     ArrayList<Task> allMyTasks;
 
@@ -39,14 +40,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
         declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
 
-        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
-        allMyTasks.clear();
+//        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+//        allMyTasks.clear();
         // need to iterate over the new array list and update the allMyTasks contents, because allMyTasks is already connected with the adaptor
-        for (int i = 0; i<updatedTasks.size(); i++){
-            allMyTasks.add(updatedTasks.get(i));
-        }
-        recyclerView.getAdapter().notifyItemInserted(0);
-        recyclerView.smoothScrollToPosition(0);
+//        for (int i = 0; i<updatedTasks.size(); i++){
+//            allMyTasks.add(updatedTasks.get(i));
+//        }
+//        recyclerView.getAdapter().notifyItemInserted(0);
+//        recyclerView.smoothScrollToPosition(0);
     }
 
     @Override
@@ -54,12 +55,12 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         configureAWS();
+        allMyTasks = new ArrayList<>();
+//        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
+//                .allowMainThreadQueries()
+//                .build();
 
-        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
-                .allowMainThreadQueries()
-                .build();
-
-        allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+//        allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
 
         recyclerView = findViewById(R.id.allMyTasksRV);
         LinearLayoutManager l = new LinearLayoutManager(this);
@@ -112,6 +113,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
     }
     private void configureAWS(){
         try {
+            Amplify.addPlugin(new AWSApiPlugin());
             Amplify.configure(getApplicationContext());
             Log.i("MyAmplifyApp", "Initialized Amplify");
         } catch (AmplifyException error) {

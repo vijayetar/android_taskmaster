@@ -15,6 +15,8 @@ import com.amplifyframework.core.model.annotations.ModelConfig;
 import com.amplifyframework.core.model.annotations.ModelField;
 import com.amplifyframework.core.model.query.predicate.QueryField;
 
+import org.jetbrains.annotations.NotNull;
+
 import static com.amplifyframework.core.model.query.predicate.QueryField.field;
 
 /** This is an auto generated class representing the Task type in your schema. */
@@ -26,7 +28,8 @@ public final class Task implements Model {
   public static final QueryField TITLE = field("title");
   public static final QueryField BODY = field("body");
   public static final QueryField STATE = field("state");
-  @PrimaryKey(autoGenerate = true)
+  @PrimaryKey
+  @NotNull
   private final @ModelField(targetType="ID", isRequired = true) String id;
   private final @ModelField(targetType="String") String title;
   private final @ModelField(targetType="String") String body;
@@ -47,7 +50,7 @@ public final class Task implements Model {
       return state;
   }
   
-  private Task(String id, String title, String body, String state) {
+  public Task(String id, String title, String body, String state) {
     this.id = id;
     this.title = title;
     this.body = body;

@@ -4,7 +4,7 @@ import androidx.room.Dao;
 import androidx.room.Insert;
 import androidx.room.Query;
 
-import com.vijayetar.mytasks.models.Task;
+import com.amplifyframework.datastore.generated.model.Task;
 
 import java.util.List;
 
