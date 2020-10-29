@@ -9,11 +9,14 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.amplifyframework.AmplifyException;
+import com.amplifyframework.core.Amplify;
 import com.vijayetar.mytasks.R;
 import com.vijayetar.mytasks.TaskAdapter;
 import com.vijayetar.mytasks.models.Database;
@@ -50,6 +53,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        configureAWS();
 
         db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
                 .allowMainThreadQueries()
@@ -105,6 +109,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         intent.putExtra("body", task.getBody());
         intent.putExtra("state", task.getState());
         this.startActivity(intent);
+    }
+    private void configureAWS(){
+        try {
+            Amplify.configure(getApplicationContext());
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+        }
     }
 
 }
