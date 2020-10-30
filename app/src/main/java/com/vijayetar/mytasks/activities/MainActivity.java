@@ -1,5 +1,6 @@
 package com.vijayetar.mytasks.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -8,6 +9,9 @@ import androidx.room.Room;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.preference.PreferenceManager;
 import android.util.Log;
 import android.view.View;
@@ -24,12 +28,14 @@ import com.vijayetar.mytasks.R;
 import com.vijayetar.mytasks.TaskAdapter;
 import com.vijayetar.mytasks.models.Database;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInteractWithTaskListener {
 //    Database db;
     RecyclerView recyclerView;
     ArrayList<Task> allMyTasks;
+    Handler handler;
 
 
     @Override
@@ -40,39 +46,88 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         TextView declareUsername = findViewById(R.id.enterUserNameTextV);
         String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
         declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
-        getContentFromAWSDynamoDB();
-
-//        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
-//        allMyTasks.clear();
-        // need to iterate over the new array list and update the allMyTasks contents, because allMyTasks is already connected with the adaptor
+        //        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
+        //         need to iterate over the new array list and update the allMyTasks contents, because allMyTasks is already connected with the adaptor
 //        for (int i = 0; i<updatedTasks.size(); i++){
 //            allMyTasks.add(updatedTasks.get(i));
 //        }
-//        recyclerView.getAdapter().notifyItemInserted(0);
-//        recyclerView.smoothScrollToPosition(0);
+
+        getContentFromAWSDynamoDB();
+        System.out.println("this is the allTasks size: "+allMyTasks.size());
+        if (allMyTasks.size()>0) {
+            recyclerView.getAdapter().notifyItemInserted(allMyTasks.size() - 1);
+            recyclerView.smoothScrollToPosition(allMyTasks.size() - 1);
+        }
     }
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         configureAWS();
+
         allMyTasks = new ArrayList<>();
-        getContentFromAWSDynamoDB();
 //        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
 //                .allowMainThreadQueries()
 //                .build();
 
 //        allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
-
+//        getContentFromAWSDynamoDB();
         recyclerView = findViewById(R.id.allMyTasksRV);
         LinearLayoutManager l = new LinearLayoutManager(this);
 //        l.canScrollHorizontally(); // to set it up horizontally, otherwise not required
 //        l.setOrientation(LinearLayoutManager.HORIZONTAL);// set it up horizontally, otherwise not required
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
+        allButtonsAndListeners();
 
 
+    }
+    @Override
+    public void taskListener(Task task) {
+        Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
+        intent.putExtra("title", task.getTitle());
+        intent.putExtra("body", task.getBody());
+        intent.putExtra("state", task.getState());
+        this.startActivity(intent);
+    }
+
+    private void configureAWS(){
+        try {
+            Amplify.addPlugin(new AWSApiPlugin());
+            Amplify.configure(getApplicationContext());
+            Log.i("MyAmplifyApp", "Initialized Amplify");
+        } catch (AmplifyException error) {
+            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
+        }
+    }
+    // pull out the contents of the dynamoDB
+    private void getContentFromAWSDynamoDB(){
+        handler = new Handler(Looper.getMainLooper(),
+                new Handler.Callback(){
+                    @Override
+                    public boolean handleMessage(@NonNull Message message) {
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        return true;
+                    }
+                }
+        );
+        allMyTasks.clear();
+        Amplify.API.query(
+                ModelQuery.list(Task.class),
+                response -> {
+                    for (Task thisTask: response.getData() ){
+                        allMyTasks.add(thisTask);
+                    }
+                    handler.sendEmptyMessage(1);
+                },
+                error -> Log.e("AmplifyDB.queryitems", "Could not get the items"));
+
+    }
+    private void allButtonsAndListeners(){
         // this is button taking you to the add task and all tasks activity
         Button addTask = MainActivity.this.findViewById(R.id.addTask);
         Button allTasks = MainActivity.this.findViewById(R.id.allTasks);
@@ -105,37 +160,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
                 MainActivity.this.startActivity(seeUserSettingsActivity);
             }
         });
-    }
-    @Override
-    public void taskListener(Task task) {
-        Intent intent = new Intent(MainActivity.this, TaskDetailActivity.class);
-        intent.putExtra("title", task.getTitle());
-        intent.putExtra("body", task.getBody());
-        intent.putExtra("state", task.getState());
-        this.startActivity(intent);
-    }
-
-    private void configureAWS(){
-        try {
-            Amplify.addPlugin(new AWSApiPlugin());
-            Amplify.configure(getApplicationContext());
-            Log.i("MyAmplifyApp", "Initialized Amplify");
-        } catch (AmplifyException error) {
-            Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
-        }
-    }
-    // pull out the contents of the dynamoDB
-    public void getContentFromAWSDynamoDB(){
-        Amplify.API.query(
-                ModelQuery.list(Task.class),
-                response -> {
-                    ArrayList<Task> allTasksFromDynamo = new ArrayList<>();
-                    for (Task thisTask: response.getData() ){
-                        allTasksFromDynamo.add(thisTask);
-                        System.out.println(thisTask.toString());
-                    }
-                },
-                error -> Log.e("AmplifyDB.queryitems", "Could not get the items"));
     }
 
 

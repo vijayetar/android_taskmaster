@@ -34,7 +34,6 @@ public class AddTaskActivity extends AppCompatActivity {
                 EditText taskDescription = AddTaskActivity.this.findViewById(R.id.editTaskDescription);
                 String taskName = taskTitle.getText().toString();
                 String taskBody = taskDescription.getText().toString();
-                System.out.println(String.format("This is the task %s : %s", taskName, taskBody));
 
                 //save it to the DyanamoDB
                 Task newTask = Task.builder().title(taskName).body(taskBody).state("assigned").build();
