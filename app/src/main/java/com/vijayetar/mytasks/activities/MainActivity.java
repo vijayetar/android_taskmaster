@@ -71,6 +71,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
 
         allMyTasks = new ArrayList<>();
 //        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
+//                .fallbackToDestructiveMigration()
 //                .allowMainThreadQueries()
 //                .build();
 
