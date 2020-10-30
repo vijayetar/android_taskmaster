@@ -22,7 +22,10 @@ public class AddTaskActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-        db = Room.databaseBuilder(getApplicationContext(), Database.class, "vijayetar_taskmaster").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(getApplicationContext(), Database.class, "vijayetar_taskmaster")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
 
         Button addTask = AddTaskActivity.this.findViewById(R.id.addTaskSubmit);
 
