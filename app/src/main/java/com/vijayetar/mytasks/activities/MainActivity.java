@@ -18,6 +18,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.amplifyframework.AmplifyException;
 import com.amplifyframework.api.ApiOperation;
@@ -34,7 +35,7 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInteractWithTaskListener {
-//    Database db;
+    Database db;
     RecyclerView recyclerView;
     ArrayList<Task> allMyTasks;
     Handler handler;
@@ -54,46 +55,71 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
 //            allMyTasks.add(updatedTasks.get(i));
 //        }
 
-        getContentFromAWSDynamoDB();
-        System.out.println("this is the allTasks size: "+allMyTasks.size());
-        if (allMyTasks.size()>0) {
-            recyclerView.getAdapter().notifyItemInserted(allMyTasks.size() - 1);
-            recyclerView.smoothScrollToPosition(allMyTasks.size() - 1);
-        }
+//        System.out.println("this is the allTasks size: "+allMyTasks.size());
+//        if (allMyTasks.size()>0) {
+//            recyclerView.getAdapter().notifyItemInserted(allMyTasks.size() - 1);
+//            recyclerView.smoothScrollToPosition(allMyTasks.size() - 1);
+//        }
+//        //notifies other users on the app that item has been saved
+        Handler handleSingleTaskAdded= new Handler(Looper.getMainLooper(),
+                (message -> {
+                    recyclerView.getAdapter().notifyItemInserted(allMyTasks.size()-1);
+                    Toast.makeText(
+                            this,
+                            allMyTasks.get(allMyTasks.size()-1).getTitle()+" was added to task",
+                            Toast.LENGTH_LONG).show();
+                    recyclerView.smoothScrollToPosition(allMyTasks.size()-1);
+                    return true;
+                })
+                );
+
+        String TAG = "Amplify.subscription";
+        ApiOperation subscription = Amplify.API.subscribe(
+                ModelSubscription.onCreate(Task.class),
+                onEstablished -> Log.i(TAG, "Subscription established"),
+                onCreated -> {
+                    Log.i(
+                            TAG, " AMPLIFY SUBSCRIPTION - Task create subscription received: " + ((Task) onCreated.getData()).getTitle()
+                    );
+                    Task createdTask = (Task) onCreated.getData();
+                    allMyTasks.add(createdTask);
+                    handleSingleTaskAdded.sendEmptyMessage(1);
+                },
+
+                onFailure -> Log.e(TAG, "Subscription failed", onFailure),
+                () -> Log.i(TAG, "Subscription completed")
+        );
     }
-
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        // configure AWS
         configureAWS();
-
-        allMyTasks = new ArrayList<>();
-//        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
-//                .fallbackToDestructiveMigration()
-//                .allowMainThreadQueries()
-//                .build();
+        // configure database
+        db = Room.databaseBuilder(getApplicationContext(),Database.class, "vijayetar_taskmaster")
+                .fallbackToDestructiveMigration()
+                .allowMainThreadQueries()
+                .build();
+        handler = new Handler(Looper.getMainLooper(),
+                new Handler.Callback(){
+                    @Override
+                    public boolean handleMessage(@NonNull Message message) {
+                        recyclerView.getAdapter().notifyDataSetChanged();
+                        return true;
+                    }
+                }
+        );
+        connectAdapterToRecyclerView();
+        getContentFromAWSDynamoDB();
 
 //        allMyTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
 //        getContentFromAWSDynamoDB();
-        recyclerView = findViewById(R.id.allMyTasksRV);
-        LinearLayoutManager l = new LinearLayoutManager(this);
-//        l.canScrollHorizontally(); // to set it up horizontally, otherwise not required
-//        l.setOrientation(LinearLayoutManager.HORIZONTAL);// set it up horizontally, otherwise not required
-        recyclerView.setLayoutManager(l);
-        recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
+
+
         allButtonsAndListeners();
-        String TAG = "Amplify.subscription";
-        ApiOperation subscription = Amplify.API.subscribe(
-                ModelSubscription.onCreate(Task.class),
-                onEstablished -> Log.i(TAG, "Subscription established"),
-                onCreated -> Log.i(TAG, "Task create subscription received: " + ((Task) onCreated.getData()).getTitle()),
-                onFailure -> Log.e(TAG, "Subscription failed", onFailure),
-                () -> Log.i(TAG, "Subscription completed")
-        );
+
 
     }
     @Override
@@ -115,18 +141,18 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         }
     }
 
+    private void connectAdapterToRecyclerView(){
+        allMyTasks = new ArrayList<>();
+        recyclerView = findViewById(R.id.allMyTasksRV);
+        LinearLayoutManager l = new LinearLayoutManager(this);
+//        l.canScrollHorizontally(); // to set it up horizontally, otherwise not required
+//        l.setOrientation(LinearLayoutManager.HORIZONTAL);// set it up horizontally, otherwise not required
+        recyclerView.setLayoutManager(l);
+        recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
+    }
+
     // pull out the contents of the dynamoDB
     private void getContentFromAWSDynamoDB(){
-        handler = new Handler(Looper.getMainLooper(),
-                new Handler.Callback(){
-                    @Override
-                    public boolean handleMessage(@NonNull Message message) {
-                        recyclerView.getAdapter().notifyDataSetChanged();
-                        return true;
-                    }
-                }
-        );
-        allMyTasks.clear();
         Amplify.API.query(
                 ModelQuery.list(Task.class),
                 response -> {
@@ -136,7 +162,6 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
                     handler.sendEmptyMessage(1);
                 },
                 error -> Log.e("AmplifyDB.queryitems", "Could not get the items"));
-
     }
 
     private void allButtonsAndListeners(){

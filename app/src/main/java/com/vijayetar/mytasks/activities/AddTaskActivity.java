@@ -4,13 +4,16 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.amplifyframework.api.ApiOperation;
 import com.amplifyframework.api.graphql.model.ModelMutation;
+import com.amplifyframework.api.graphql.model.ModelSubscription;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.vijayetar.mytasks.R;
@@ -38,13 +41,18 @@ public class AddTaskActivity extends AppCompatActivity {
                 String taskName = taskTitle.getText().toString();
                 String taskBody = taskDescription.getText().toString();
 
-                //save it to the DyanamoDB
-                Task newTask = Task.builder().title(taskName).body(taskBody).state("assigned").build();
-                Amplify.API.mutate(ModelMutation.create(newTask), response -> Log.i("AmplifyDB","saved to database"), error -> Log.e("AmplifyDB",error.toString()));
-
+                //creating it as the newTask
+                Task newTask = Task.builder()
+                        .title(taskName).body(taskBody)
+                        .state("assigned").build();
 
                 // let us save the task to the database instead
                 db.taskDao().saveTask(newTask);
+
+                // saving it to DynamoDB
+                Amplify.API.mutate(ModelMutation.create(newTask),
+                        response -> Log.i("AmplifyDB","saved to database"),
+                        error -> Log.e("AmplifyDB",error.toString()));
 
                 // try to print out the submitted text view here on click
                 TextView textShowSubmit = AddTaskActivity.this.findViewById(R.id.editShowSubmit);
