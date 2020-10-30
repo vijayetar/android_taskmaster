@@ -50,6 +50,8 @@ public class AddTaskActivity extends AppCompatActivity {
                 TextView textShowSubmit = AddTaskActivity.this.findViewById(R.id.editShowSubmit);
                 textShowSubmit.setVisibility(View.VISIBLE);
 
+                finish(); // TAKES YOU BACK TO THE PREVIOUS PAGE
+
             }
         });
 

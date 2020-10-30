@@ -20,8 +20,10 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.amplifyframework.AmplifyException;
+import com.amplifyframework.api.ApiOperation;
 import com.amplifyframework.api.aws.AWSApiPlugin;
 import com.amplifyframework.api.graphql.model.ModelQuery;
+import com.amplifyframework.api.graphql.model.ModelSubscription;
 import com.amplifyframework.core.Amplify;
 import com.amplifyframework.datastore.generated.model.Task;
 import com.vijayetar.mytasks.R;
@@ -84,7 +86,14 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         recyclerView.setLayoutManager(l);
         recyclerView.setAdapter(new TaskAdapter(allMyTasks, this));
         allButtonsAndListeners();
-
+        String TAG = "Amplify.subscription";
+        ApiOperation subscription = Amplify.API.subscribe(
+                ModelSubscription.onCreate(Task.class),
+                onEstablished -> Log.i(TAG, "Subscription established"),
+                onCreated -> Log.i(TAG, "Task create subscription received: " + ((Task) onCreated.getData()).getTitle()),
+                onFailure -> Log.e(TAG, "Subscription failed", onFailure),
+                () -> Log.i(TAG, "Subscription completed")
+        );
 
     }
     @Override
@@ -105,6 +114,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
             Log.e("MyAmplifyApp", "Could not initialize Amplify", error);
         }
     }
+
     // pull out the contents of the dynamoDB
     private void getContentFromAWSDynamoDB(){
         handler = new Handler(Looper.getMainLooper(),
@@ -128,6 +138,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
                 error -> Log.e("AmplifyDB.queryitems", "Could not get the items"));
 
     }
+
     private void allButtonsAndListeners(){
         // this is button taking you to the add task and all tasks activity
         Button addTask = MainActivity.this.findViewById(R.id.addTask);

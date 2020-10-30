@@ -30,6 +30,7 @@ public class UserSettingsActivity extends AppCompatActivity {
                 preferenceEditor.apply();
 //                Toast toast = Toast.makeText(this, "Welcome!", Toast.LENGTH_LONG);
 //                toast.show();
+                finish();
             }
         });
 
