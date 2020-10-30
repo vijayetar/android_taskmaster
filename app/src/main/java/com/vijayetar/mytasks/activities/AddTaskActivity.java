@@ -17,12 +17,12 @@ import com.vijayetar.mytasks.R;
 import com.vijayetar.mytasks.models.Database;
 
 public class AddTaskActivity extends AppCompatActivity {
-//    Database db;
+    Database db;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_task);
-//        db = Room.databaseBuilder(getApplicationContext(), Database.class, "vijayetar_taskmaster").allowMainThreadQueries().build();
+        db = Room.databaseBuilder(getApplicationContext(), Database.class, "vijayetar_taskmaster").allowMainThreadQueries().build();
 
         Button addTask = AddTaskActivity.this.findViewById(R.id.addTaskSubmit);
 
@@ -41,8 +41,7 @@ public class AddTaskActivity extends AppCompatActivity {
 
 
                 // let us save the task to the database instead
-//                Task newTask = new Task(taskName, taskBody, "assigned");
-//                db.taskDao().saveTask(newTask);
+                db.taskDao().saveTask(newTask);
 
                 // try to print out the submitted text view here on click
                 TextView textShowSubmit = AddTaskActivity.this.findViewById(R.id.editShowSubmit);
