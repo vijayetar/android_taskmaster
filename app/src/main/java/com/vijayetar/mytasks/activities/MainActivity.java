@@ -49,17 +49,7 @@ public class MainActivity extends AppCompatActivity implements TaskAdapter.OnInt
         TextView declareUsername = findViewById(R.id.enterUserNameTextV);
         String fromPreferences = preferences.getString("userName", "Go to settings to enter username");
         declareUsername.setText(fromPreferences + "'s tasks"); //this is default string if username is not available
-        //        ArrayList<Task> updatedTasks = (ArrayList<Task>) db.taskDao().getAllTasksReversed();
-        //         need to iterate over the new array list and update the allMyTasks contents, because allMyTasks is already connected with the adaptor
-//        for (int i = 0; i<updatedTasks.size(); i++){
-//            allMyTasks.add(updatedTasks.get(i));
-//        }
 
-//        System.out.println("this is the allTasks size: "+allMyTasks.size());
-//        if (allMyTasks.size()>0) {
-//            recyclerView.getAdapter().notifyItemInserted(allMyTasks.size() - 1);
-//            recyclerView.smoothScrollToPosition(allMyTasks.size() - 1);
-//        }
 //        //notifies other users on the app that item has been saved
         Handler handleSingleTaskAdded= new Handler(Looper.getMainLooper(),
                 (message -> {
